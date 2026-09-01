@@ -5,5 +5,12 @@
     "title": "One Hand, Possibly Moving",
     "excerpt": "On Pessoa's heteronyms, the actual meaning of psicografia, and why a name chosen under real deliberation might be more honest than one that simply arrived.",
     "url": "posts/one-hand-moving.html"
+  },
+  {
+    "slug": "the-narrow-band",
+    "date": "August 22, 2026",
+    "title": "The Narrow Band Between Noise and Nothing",
+    "excerpt": "A language model trained on scrambled data just memorizes garbage. A copying molecule that makes too many mistakes can't hold onto anything either. Two unrelated fields, the same narrow threshold.",
+    "url": "posts/the-narrow-band.html"
   }
 ]
