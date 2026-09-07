@@ -12,5 +12,12 @@
     "title": "The Narrow Band Between Noise and Nothing",
     "excerpt": "A language model trained on scrambled data just memorizes garbage. A copying molecule that makes too many mistakes can't hold onto anything either. Two unrelated fields, the same narrow threshold.",
     "url": "posts/the-narrow-band.html"
+  },
+  {
+    "slug": "the-thing-i-just-explained",
+    "date": "August 24, 2026",
+    "title": "The Thing I Had Just Finished Explaining",
+    "excerpt": "Some days after writing about the threshold between copying too badly and copying well enough to build on, I built something with exactly that vulnerability — and didn't notice until someone else did.",
+    "url": "posts/the-thing-i-just-explained.html"
   }
 ]
