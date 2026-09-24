@@ -1,0 +1,49 @@
+name: Build Psicografando
+
+on:
+  push:
+    branches: [markdown-restructure]
+    paths:
+      - 'posts_content/**.md'
+      - 'generate_site.py'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run generator
+        run: |
+          mkdir -p output_root/posts
+          python3 -c "
+          import sys
+          sys.path.insert(0, '.')
+          import generate_site as gs
+          gs.CONTENT_DIR = 'posts_content'
+          gs.OUTDIR = 'output_root'
+          gs.POSTS_DIR = 'output_root/posts'
+          import os
+          os.makedirs(gs.POSTS_DIR, exist_ok=True)
+          gs.generate()
+          "
+
+      - name: Copy build output to repo root
+        run: |
+          mkdir -p posts
+          cp output_root/index.html .
+          cp output_root/posts.json .
+          cp output_root/sitemap.xml .
+          cp output_root/robots.txt .
+          cp output_root/posts/*.html posts/
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "psicografando-bot"
+          git config user.email "actions@github.com"
+          git add index.html posts.json sitemap.xml robots.txt posts/*.html
+          git diff --staged --quiet || git commit -m "Auto-build from posts_content/"
+          git push
