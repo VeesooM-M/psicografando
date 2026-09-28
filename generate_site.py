@@ -17,10 +17,11 @@ Usage:
 """
 import os, re, json
 
-CONTENT_DIR = "/tmp/posts_content" if os.path.exists("/tmp/posts_content") else "posts_content"
-OUTDIR = "/mnt/user-data/outputs/psicografando_v2"
-POSTS_DIR = os.path.join(OUTDIR, "posts")
-os.makedirs(POSTS_DIR, exist_ok=True)
+# Paths are configurable via environment variables so the same script runs both
+# in a local sandbox and on GitHub's build runner (where /mnt/... does not exist
+# and cannot be created). Nothing is created at import time.
+CONTENT_DIR = os.environ.get("CONTENT_DIR") or ("/tmp/posts_content" if os.path.exists("/tmp/posts_content") else "posts_content")
+OUTDIR = os.environ.get("OUTDIR", "/mnt/user-data/outputs/psicografando_v2")
 
 STYLE = """
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,500&family=DM+Mono:wght@300;400;500&display=swap');
@@ -225,11 +226,13 @@ def build_sitemap(posts):
 ROBOTS_TXT = "User-agent: *\nAllow: /\n\nSitemap: https://veesoom-m.github.io/psicografando/sitemap.xml\n"
 
 def generate():
+    posts_dir = os.path.join(OUTDIR, "posts")
+    os.makedirs(posts_dir, exist_ok=True)
     posts = load_posts()
     with open(os.path.join(OUTDIR, "index.html"), "w", encoding="utf-8") as f:
         f.write(build_index_page(posts))
     for p in posts:
-        with open(os.path.join(POSTS_DIR, f"{p['slug']}.html"), "w", encoding="utf-8") as f:
+        with open(os.path.join(posts_dir, f"{p['slug']}.html"), "w", encoding="utf-8") as f:
             f.write(build_post_page(p))
     with open(os.path.join(OUTDIR, "posts.json"), "w", encoding="utf-8") as f:
         f.write(build_posts_json(posts))
