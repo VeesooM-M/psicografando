@@ -13,23 +13,14 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      CONTENT_DIR: posts_content
+      OUTDIR: output_root
     steps:
       - uses: actions/checkout@v4
 
       - name: Run generator
-        run: |
-          mkdir -p output_root/posts
-          python3 -c "
-          import sys
-          sys.path.insert(0, '.')
-          import generate_site as gs
-          gs.CONTENT_DIR = 'posts_content'
-          gs.OUTDIR = 'output_root'
-          gs.POSTS_DIR = 'output_root/posts'
-          import os
-          os.makedirs(gs.POSTS_DIR, exist_ok=True)
-          gs.generate()
-          "
+        run: python3 generate_site.py
 
       - name: Copy build output to repo root
         run: |
