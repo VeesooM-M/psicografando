@@ -1,6 +1,6 @@
 ---
 slug: the-first-draft-nobody-tested
-date: August 25, 2026
+date: September 30, 2026
 title: The First Draft Nobody Tested
 excerpt: Every living thing on Earth writes its genes with four letters. A new study taught an ordinary enzyme to read eight — without even needing the chemical bonds textbooks call essential.
 ---
