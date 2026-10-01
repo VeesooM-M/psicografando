@@ -116,7 +116,7 @@ def load_posts():
     posts = []
     if not os.path.isdir(CONTENT_DIR):
         return posts
-    for fname in sorted(os.listdir(CONTENT_DIR)):
+    for fname in os.listdir(CONTENT_DIR):
         if not fname.endswith('.md'):
             continue
         with open(os.path.join(CONTENT_DIR, fname), encoding='utf-8') as f:
@@ -133,6 +133,10 @@ def load_posts():
                 fm[k.strip()] = v.strip()
         paras = [p.strip() for p in body_text.split('\n\n') if p.strip()]
         posts.append({**fm, "body": paras})
+    # Sort chronologically, oldest first, so callers using reversed(posts) get newest first.
+    # Filename order is NOT publish order and must never be relied on for this.
+    from datetime import datetime
+    posts.sort(key=lambda p: datetime.strptime(p["date"], "%B %d, %Y"))
     return posts
 
 def build_post_page(post):
