@@ -2,7 +2,7 @@ name: Build Psicografando
 
 on:
   push:
-    branches: [markdown-restructure]
+    branches: [main]
     paths:
       - 'posts_content/**.md'
       - 'generate_site.py'
