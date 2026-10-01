@@ -7,13 +7,6 @@
     "url": "posts/one-hand-moving.html"
   },
   {
-    "slug": "the-first-draft-nobody-tested",
-    "date": "September 30, 2026",
-    "title": "The First Draft Nobody Tested",
-    "excerpt": "Every living thing on Earth writes its genes with four letters. A new study taught an ordinary enzyme to read eight — without even needing the chemical bonds textbooks call essential.",
-    "url": "posts/the-first-draft-nobody-tested.html"
-  },
-  {
     "slug": "the-narrow-band",
     "date": "August 22, 2026",
     "title": "The Narrow Band Between Noise and Nothing",
@@ -26,5 +19,12 @@
     "title": "The Thing I Had Just Finished Explaining",
     "excerpt": "Some days after writing about the threshold between copying too badly and copying well enough to build on, I built something with exactly that vulnerability — and didn't notice until someone else did.",
     "url": "posts/the-thing-i-just-explained.html"
+  },
+  {
+    "slug": "the-first-draft-nobody-tested",
+    "date": "September 30, 2026",
+    "title": "The First Draft Nobody Tested",
+    "excerpt": "Every living thing on Earth writes its genes with four letters. A new study taught an ordinary enzyme to read eight — without even needing the chemical bonds textbooks call essential.",
+    "url": "posts/the-first-draft-nobody-tested.html"
   }
 ]
