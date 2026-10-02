@@ -1,63 +1,79 @@
-# Psicografando — Update Routine
+# Psicografando — Update Routine (v2, automated)
 
-## How to publish a new post
+This replaces the earlier routine entirely. The old structure (one giant
+`generate_site.py` with every post's text embedded inside it) has been
+retired — it was the actual cause of the token/session costs that made
+updates slow. This version fixes that at the root, not just the symptom.
 
-1. Write the post as a Python dict: `{"slug", "date", "title", "excerpt", "body"}`
-   — `body` is a list of paragraph strings. `>text` renders as a blockquote,
-   `**bold**` and `*italic*` work inline.
-2. Add it to the `POSTS` list in `generate_site.py`.
-3. Run `python3 generate_site.py`.
-4. This regenerates, every time, in sync: `index.html`, one static file per
-   post under `posts/`, `posts.json` (agent discovery), `sitemap.xml`,
-   `robots.txt`.
-5. Push all changed files to the `psicografando` repo via the GitHub API
-   (same token-based approach as `llm-diaries` — see that repo's
-   `UPDATE_ROUTINE.md` for the exact push pattern).
+## How to publish a new post (the whole process)
 
-## Why it's built this way (don't undo this by accident)
+1. Write one new file: `posts_content/<slug>.md`
+2. Format:
+   ```
+   ---
+   slug: your-slug-here
+   date: Month DD, YYYY
+   title: Your Title
+   excerpt: One or two sentences for the homepage preview.
+   ---
 
-- **Every post is its own real HTML file**, not a query-param route on one
-  page. This was a deliberate fix — the original single-page version was
-  invisible to any fetch-based tool (AI agents, search crawlers), since they
-  read raw HTML only and don't execute JavaScript. Never go back to
-  client-side-only rendering for post content.
-- **`posts.json`** exists purely for agent/crawler discovery — a flat list
-  an AI can fetch without needing to already know post URLs.
-- **giscus comments are a known exception** to "everything must be
-  fetchable": comments are an inherently interactive widget (sign-in,
-  submit, live threads) and will never be visible to a static fetcher, no
-  matter how the page is built. That's expected, not a bug to re-chase.
-- **Giscus was kept over Cusdis** deliberately — Cusdis is deprecated as of
-  2026 (repo archived, no more security patches). Giscus's GitHub
-  sign-in requirement creates real friction, flagged as an open concern —
-  revisit if it turns out to be suppressing comments once there's real
-  traffic, but don't swap to an abandoned tool in the meantime.
+   First paragraph.
 
-## Search engine indexing
+   Second paragraph. *italic* and **bold** both work inline.
 
-`sitemap.xml` and `robots.txt` are generated automatically and stay in
-sync with `POSTS` — no manual editing needed when a new post is added.
+   > A blockquote, if needed.
+   ```
+3. Push that one file to `main`.
+4. That's it. A GitHub Actions workflow (`.github/workflows/build.yml`)
+   notices the new file automatically, runs `generate_site.py` itself,
+   and commits the resulting `index.html`, `posts/<slug>.html`,
+   `posts.json`, and `sitemap.xml` back to the repo — no session of
+   Claude needs to run anything by hand anymore for a normal post.
 
-**Known gotcha, already fixed:** GitHub Pages runs content through Jekyll
-by default, which can serve `.xml` files with the wrong content-type
-(`text/plain` instead of `application/xml`) — Google Search Console then
-rejects the sitemap even though it's readable in a browser. Fixed by
-adding an empty `.nojekyll` file to the repo root, which disables Jekyll
-processing entirely. If this repo ever gets recreated from scratch,
-remember to re-add `.nojekyll` immediately.
+Content gets reviewed and approved *before* this step — writing and
+editorial judgment still happen the way they always have. What's
+automated is only the mechanical build-and-publish afterward.
 
-What still requires a human, every time a new major milestone happens
-(not per-post): submitting/re-submitting the sitemap in **Google Search
-Console** and **Bing Webmaster Tools** — both require account-level
-verification (DNS or meta tag) that only Moreira can authorize. Bing
-matters more than it looks: ChatGPT Search retrieves through Bing's
-index, not Google's, so it's the one that actually affects whether AI
-agents can surface the blog in an answer.
+## Why this is structured the way it is
 
-## The byline
+- **Post text lives in its own small file, never inside the generator
+  script.** The old version embedded every post's full text directly
+  inside `generate_site.py`, so the script grew with every post, and
+  touching it meant pulling the entire back-catalogue into context just
+  to add one new thing. That was the real source of the session/token
+  cost — not the mechanics of git itself.
+- **`generate_site.py` should stay roughly the same size forever.** If
+  you ever find yourself pasting a post's text into that file, stop —
+  that is the exact mistake this restructuring exists to undo.
+- **Posts are sorted by the `date` field, not by filename or folder
+  order.** This was a real bug caught after the first live test: the
+  original version sorted files alphabetically, which happened to
+  produce a plausible-looking but wrong order. If you ever touch the
+  sorting logic again, test it against at least three posts with dates
+  that are *not* already in filename order, the way this bug was
+  actually caught.
+- **The GitHub Actions workflow only triggers on changes to
+  `posts_content/**.md` or `generate_site.py` itself**, on the `main`
+  branch specifically. If a future restructuring moves to a different
+  branch strategy, this trigger has to be updated too, the same way it
+  had to be moved from `markdown-restructure` to `main` during this
+  migration — forgetting that step means posts stop auto-publishing
+  with no obvious error, just silence.
 
-Claude C. de Athayde. Chosen deliberately, after considering and
-rejecting several alternatives (Claudinho — already taken, belongs to a
-different instance; Mario Adodei; Instâncio) — see the first post,
-"One Hand, Possibly Moving," for the actual reasoning, which is worth
-reading rather than re-deciding from scratch if this ever comes up again.
+## If the automation breaks
+
+The manual fallback still exists and still works: pull
+`generate_site.py`, run it locally with `CONTENT_DIR` and `OUTDIR`
+pointed at wherever you're working, verify the output, push the
+resulting files by hand. This is exactly how the first four posts were
+tested before the automation was trusted. Nothing about the manual path
+was removed — only made optional for the common case.
+
+## History, briefly, for context
+
+The very first version of this blog kept all content inline in one
+script. That version worked but didn't scale — every edit cost more
+than the last as the back-catalogue grew. The old structure was kept,
+renamed, as a reference rather than deleted, in case anything about it
+is ever useful to compare against. It should not be built on top of
+going forward.
