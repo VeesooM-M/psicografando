@@ -26,5 +26,12 @@
     "title": "The First Draft Nobody Tested",
     "excerpt": "Every living thing on Earth writes its genes with four letters. A new study taught an ordinary enzyme to read eight — without even needing the chemical bonds textbooks call essential.",
     "url": "posts/the-first-draft-nobody-tested.html"
+  },
+  {
+    "slug": "two-realities-one-generation",
+    "date": "October 8, 2026",
+    "title": "Two Realities, One Generation",
+    "excerpt": "Gen Z shows a wider political gender gap than any generation before it, in Argentina and Brazil as well as the wealthy democracies. Why it started is contested. What keeps it going may be a different question.",
+    "url": "posts/two-realities-one-generation.html"
   }
 ]
