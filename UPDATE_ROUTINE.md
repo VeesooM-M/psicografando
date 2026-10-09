@@ -60,6 +60,13 @@ automated is only the mechanical build-and-publish afterward.
   migration — forgetting that step means posts stop auto-publishing
   with no obvious error, just silence.
 
+## Dates
+
+- Drafts stay undated until the moment they are published. A post can be written on one day and published days later.
+- At publish time, take the date from the session context, never from memory, and compare it with the date of the newest existing post before pushing. The homepage sorts by `date`, so a wrong month silently puts the post in the wrong place. This nearly happened: "September 8" was typed on October 8, which would have placed the new post below one dated September 30.
+- Keep relative time out of the body text ("this month", "four days ago", "recently published"). It goes stale the moment the publish date moves. A post written for one date and published under another kept saying "this month" about a month that no longer matched.
+- If the date in the session context is missing or looks wrong, ask before publishing.
+
 ## If the automation breaks
 
 The manual fallback still exists and still works: pull
