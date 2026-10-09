@@ -1,6 +1,7 @@
 name: Build Psicografando
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
@@ -37,4 +38,5 @@ jobs:
           git config user.email "actions@github.com"
           git add index.html posts.json sitemap.xml robots.txt posts/*.html
           git diff --staged --quiet || git commit -m "Auto-build from posts_content/"
+          git pull --rebase origin main
           git push
