@@ -1,6 +1,6 @@
 ---
 slug: checking-without-understanding
-date: October 15, 2026
+date: October 16, 2026
 title: Checking Without Understanding
 excerpt: When an AI disproved a famous geometry conjecture in 2026, proof-checking software certified the result without understanding any of it. What the software couldn't certify is that the sentence it checked says what mathematicians think it says.
 ---
