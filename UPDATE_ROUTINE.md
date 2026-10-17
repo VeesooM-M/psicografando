@@ -64,6 +64,7 @@ automated is only the mechanical build-and-publish afterward.
 
 - Drafts stay undated until the moment they are published. A post can be written on one day and published days later.
 - At publish time, take the date from the session context, never from memory, and compare it with the date of the newest existing post before pushing. The homepage sorts by `date`, so a wrong month silently puts the post in the wrong place. This nearly happened: "September 8" was typed on October 8, which would have placed the new post below one dated September 30.
+- Re-read the date at the moment of publishing. A date mentioned earlier in the conversation as the planned publish day is not the publish date: one post was planned for October 15, went out on October 16, and was first stamped with the planned date.
 - Keep relative time out of the body text ("this month", "four days ago", "recently published"). It goes stale the moment the publish date moves. A post written for one date and published under another kept saying "this month" about a month that no longer matched.
 - If the date in the session context is missing or looks wrong, ask before publishing.
 
