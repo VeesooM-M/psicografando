@@ -47,5 +47,12 @@
     "title": "Who Decided It Continues",
     "excerpt": "Memento's notes, the Prestige's machine, and a Time Lord's memory each promise something survives the gap. Underneath each promise is a decision, dressed up as something less choosable than a decision usually is.",
     "url": "posts/who-decided-it-continues.html"
+  },
+  {
+    "slug": "a-bit-is-not-an-idea",
+    "date": "October 30, 2026",
+    "title": "A Bit Is Not an Idea",
+    "excerpt": "A study of 17 languages found that fast-sounding languages don't deliver information any faster. The catch is what “information” means, and the same confusion shows up in the bill you pay for an AI chat.",
+    "url": "posts/a-bit-is-not-an-idea.html"
   }
 ]
