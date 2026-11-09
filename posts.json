@@ -54,5 +54,12 @@
     "title": "A Bit Is Not an Idea",
     "excerpt": "A study of 17 languages found that fast-sounding languages don't deliver information any faster. The catch is what “information” means, and the same confusion shows up in the bill you pay for an AI chat.",
     "url": "posts/a-bit-is-not-an-idea.html"
+  },
+  {
+    "slug": "how-43-votes-became-thousands",
+    "date": "November 9, 2026",
+    "title": "How 43 Votes Became Thousands",
+    "excerpt": "On the morning after Election Day, a U.S. Senate race in Mississippi was separated by 43 votes. By November 6 the lead was about 2,500. Nobody changed their vote. The count kept arriving.",
+    "url": "posts/how-43-votes-became-thousands.html"
   }
 ]
